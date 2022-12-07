@@ -1,0 +1,41 @@
+{% extends './base.html' %}
+
+{% block titulo %}Solicitud{% endblock titulo %}
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/tornquist/publica/css/zonasAlojamiento.css'%}?v={% now 'U' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/tornquist/publica/css/contacto.css'%}?v={% now 'U' %}">
+{% endblock css %}
+
+
+{% block contenido %}
+<section class="content showcase">
+    <h1 class="logo2"><b>SO</b>LICITUD</h1>
+
+    <div class="contact-wrapper animated bounceInUp">
+      <div class="contact-form" id="form">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+
+        <form action="" method="post" id="contact" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for campo in form %}
+            <p>
+              <label for="">{{ campo.label }}</label>
+              {{ campo }}
+            </p>
+            <div>{{ campo.errors }}</div>
+            {% endfor %}
+                      
+            <div class="center">
+                <button type="submit">Enviar</button>
+            </div>
+          <p class="warnings" id="warnings"></p>
+        </form>
+      </div>
+    </div>
+</section>
+{% endblock contenido %}
+
